@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Plus } from 'lucide-react'; // Import the icon you want to use
+import { Info } from 'lucide-react'; // Import the icon you want to use
 
 const CardWithCustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -46,21 +46,21 @@ const CardWithCustomCursor: React.FC = () => {
   return (
     <div 
       ref={cardRef}
-      className="relative w-64 h-40 bg-gray-200 rounded-lg overflow-hidden"
+      className="relative w-64 h-40 bg-gray-800 rounded-lg overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-2 text-gray-600">Smooth hover</h2>
+        <h2 className="text-xl font-bold mb-2 text-gray-500">Smooth hover, better performance</h2>
         <p></p>
       </div>
       <div 
-        className={`absolute w-8 h-8 rounded-full border-2 border-blue-500 pointer-events-none transition-opacity duration-300 ease-out flex items-center justify-center ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+        className={`absolute w-10 h-10 rounded-full border-2 border-white pointer-events-none transition-opacity duration-300 ease-out flex items-center justify-center ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
         style={{
           left: `${cursorPosition.x - 16}px`,
           top: `${cursorPosition.y - 16}px`,
         }}>
-        <Plus size={16} color="#3B82F6" /> 
+        <Info size={16} color="#fff" /> 
       </div>
     </div>
   );
