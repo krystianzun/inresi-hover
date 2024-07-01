@@ -6,8 +6,10 @@ import { Info } from 'lucide-react'; // Import the icon you want to use
 const CardWithCustomCursor: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const requestRef = useRef<number | null>(null);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
 
   const updateCursorPosition = (x: number, y: number) => {
     setCursorPosition({ x, y });
@@ -25,15 +27,29 @@ const CardWithCustomCursor: React.FC = () => {
     }
   };
 
+  const handleMouseDown = () => {
+    setIsMouseDown(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsMouseDown(false);
+  };
+
   useEffect(() => {
     if (isHovering) {
       window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mousedown', handleMouseDown);
+      window.addEventListener('mouseup', handleMouseUp);
     } else {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
     }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current);
       }
@@ -52,17 +68,35 @@ const CardWithCustomCursor: React.FC = () => {
         <p></p>
       </div>
       <div 
-        className={`absolute w-10 h-10 rounded-full border-2 border-white pointer-events-none transition-all duration-300 ease-out flex items-center justify-center ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+        ref={cursorRef}
+        className={`absolute w-10 h-10 rounded-full border-2 border-white pointer-events-none transition-all duration-300 ease-out flex items-center justify-center ${isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} ${isMouseDown ? 'bg-white' : 'bg-transparent'}`}
         style={{
           left: `${cursorPosition.x - 16}px`,
           top: `${cursorPosition.y - 16}px`,
         }}>
-        <Info size={16} color="#fff" /> 
+        <Info size={16} color={isMouseDown ? "#000" : "#fff"} /> 
+        {isMouseDown && (
+          <div className="absolute w-full h-full rounded-full bg-blue-500 animate-fill"></div>
+        )}
       </div>
 
+      <style jsx>{`
+        @keyframes fill {
+          0% {
+            transform: scale(0);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        .animate-fill {
+          animation: fill 1s forwards;
+        }
+      `}</style>
     </div>
-    
   );
 };
 
 export default CardWithCustomCursor;
+
+
