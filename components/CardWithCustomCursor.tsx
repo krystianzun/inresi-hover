@@ -43,7 +43,7 @@ const CardWithCustomCursor: React.FC = () => {
   return (
     <div 
       ref={cardRef}
-      className="relative w-64 h-40 bg-gray-800 rounded-lg overflow-hidden"
+      className="relative w-64 h-40 bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:shadow-2xl duration-300 ease-out hover:shadow-blue-500/50"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -59,7 +59,9 @@ const CardWithCustomCursor: React.FC = () => {
         }}>
         <Info size={16} color="#fff" /> 
       </div>
+
     </div>
+    
   );
 };
 
