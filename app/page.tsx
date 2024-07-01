@@ -9,6 +9,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center min-h-screen space-y-16">
         <CardWithCustomCursor />
         <SmoothHover />
+        <div>Make sure to watch loom walkthrough video!</div>
       </div>
     </main>
   );
